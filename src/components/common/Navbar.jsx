@@ -6,9 +6,7 @@ const Navbar = () => {
     <>
       <NavLink
         className={({ isActive }) =>
-          isActive
-            ? "font-bold underline underline-offset-1 bg-amber-300  rounded-sm p-2"
-            : "p-2"
+          isActive ? "font-bold  bg-amber-300  rounded-sm p-2" : "p-2"
         }
         to="/"
       >
@@ -16,9 +14,7 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          isActive
-            ? "font-bold underline underline-offset-1 bg-amber-300  rounded-sm p-2"
-            : "p-2"
+          isActive ? "font-bold  bg-amber-300  rounded-sm p-2" : "p-2"
         }
         to="/all-artifacts"
       >
@@ -26,9 +22,7 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className={({ isActive }) =>
-          isActive
-            ? "font-bold underline underline-offset-1 bg-amber-300  rounded-sm p-2"
-            : "p-2"
+          isActive ? "font-bold  bg-amber-300  rounded-sm p-2" : "p-2"
         }
         to="/add-artifacts"
       >
@@ -41,7 +35,7 @@ const Navbar = () => {
   const [isHover, setIsHover] = useState(false);
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-200">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -62,21 +56,23 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-32 p-2 shadow"
           >
             {navLinks}
           </ul>
         </div>
         <Link
           to="/"
-          className="font-bold text-xl text-amber-500 flex items-center justify-center gap-2"
+          className="font-bold text-xl text-ambe r-500 flex items-center justify-center gap-2"
         >
           <img className="w-10 h-10" src={logo} alt="site-logo" />
-          <p>Artifact Atlas</p>
+          <p className="italic  p-1 rounded ">Artifact <span className="text-amber-600">Atlas</span></p>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 gap-4">{navLinks}</ul>
+        <ul className="menu menu-horizontal px-1 gap-4 font-medium">
+          {navLinks}
+        </ul>
       </div>
 
       {/* nav end */}
@@ -89,7 +85,7 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-40 p-2 shadow"
+                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-40 p-2 shadow font-medium"
               >
                 <li>
                   <Link to="my-artifacts">My Artifacts</Link>
@@ -118,7 +114,7 @@ const Navbar = () => {
 
             {/* show username and logout button on hover */}
             <div
-              className={` absolute top-11 -left-8 md:w-28   md:-left-16 rounded-md mr-10 bg-gray-200 p-2 ${
+              className={` absolute top-11 -left-8 md:w-28   md:-left-16 rounded-md mr-10 bg-amber-50 p-2 z-10 ${
                 isHover ? "block" : "hidden"
               }`}
             >
@@ -126,8 +122,8 @@ const Navbar = () => {
                 <li>
                   <a className="text-xs md:textlg">Hi, Hridoy</a>
                 </li>
-                <li className="btn btn-xs md:btn-sm">
-                  <a>Logout</a>
+                <li>
+                  <button className="btn btn-xs md:btn-sm bg-amber-300">Logout</button>
                 </li>
               </ul>
             </div>

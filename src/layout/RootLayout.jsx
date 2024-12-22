@@ -2,15 +2,16 @@
 
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
+import Footer from "../components/common/Footer";
 
 const RootLayout = () => {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto">
+      <div className="container mx-auto min-h-[calc(100vh-288px)]">
         <Outlet></Outlet>
       </div>
-      <h3>Footer</h3>
+      <Footer />
     </div>
   );
 };
