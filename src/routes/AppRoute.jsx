@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../layout/RootLayout";
+import Home from "../pages/Home/Home";
+import AddArtifacts from "../pages/AddArtifacts/AddArtifacts";
 
 export const router = createBrowserRouter([
   {
@@ -9,16 +11,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <>
-            <h2 className="font-sans text-4xl"> HOme </h2>
-            <h2 className="text-4xl "> HOme </h2>
-          </>
-        ),
+        element: <Home />,
       },
       {
-        path: "/test",
-        element: <h2> Test</h2>,
+        path: "/add-artifacts",
+        element: <AddArtifacts />,
       },
     ],
   },
