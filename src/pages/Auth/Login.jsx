@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { FcGoogle } from "react-icons/fc";
 import { useContext } from "react";
@@ -6,9 +6,11 @@ import { AuthContext } from "../../provider/AuthProvider";
 import toast from "react-hot-toast";
 
 const Login = () => {
-  const { loginUser } = useContext(AuthContext);
+  const { loginUser, loginWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
-//   console.log(loginUser);
+  const location = useLocation();
+  console.log(location.state);
+  //   console.log(loginUser);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -19,14 +21,27 @@ const Login = () => {
     loginUser(email, password)
       .then((res) => {
         toast.success("Welcome Back!");
-        navigate("/");
+        location.state ? navigate(location.state) : navigate("/");
       })
       .catch((err) => {
         toast.error("Something Wrong!!!");
-        console.log(err)
+        console.log(err);
       });
   };
-
+  //   handle login with google
+  const handleGoogleLogin = () => {
+    loginWithGoogle()
+      .then((result) => {
+        // console.log(result);
+        navigate("/");
+        toast.success("Welcome Back!");
+        location.state ? navigate(location.state) : navigate("/");
+      })
+      .catch((err) => {
+        // setError(err.message);
+        toast.error("Login Failed!");
+      });
+  };
   return (
     <div>
       <div className="flex items-center justify-center min-h-[calc(100vh-288px)]">
@@ -67,7 +82,10 @@ const Login = () => {
             </div>
           </form>
           <div className="mb-4 text-center">
-            <button className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border rounded-lg shadow-md hover:bg-gray-100">
+            <button
+              onClick={handleGoogleLogin}
+              className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border rounded-lg shadow-md hover:bg-gray-100"
+            >
               <FcGoogle className="mr-2 text-lg" />
               Continue with Google
             </button>

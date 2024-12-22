@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../layout/RootLayout";
 import Home from "../pages/Home/Home";
-import AddArtifacts from "../pages/AddArtifacts/AddArtifacts";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import PrivateRoute from "./PrivateRoute";
+import AddArtifact from "../pages/AddArtifact/AddArtifact";
 
 export const router = createBrowserRouter([
   {
@@ -17,10 +17,14 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "/all-artifacts",
+        element: <h2>ALL Artifact</h2>,
+      },
+      {
         path: "/add-artifacts",
         element: (
           <PrivateRoute>
-            <AddArtifacts />
+            <AddArtifact />
           </PrivateRoute>
         ),
       },
