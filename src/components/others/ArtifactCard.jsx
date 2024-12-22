@@ -1,8 +1,10 @@
 import React from "react";
 import { FaHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const ArtifactCard = ({ artifact }) => {
-  const { name, image, description, likes } = artifact || {};
+  const { _id, name, image, description, like } = artifact || {};
+  const navigate = useNavigate();
   return (
     <div className="card  bg-base-100 shadow-xl">
       <figure>
@@ -18,9 +20,14 @@ const ArtifactCard = ({ artifact }) => {
         <div className="flex items-center justify-between mt-4">
           <div className="flex items-center gap-2 text-red-500">
             <FaHeart />
-            <span className="font-medium">{likes}</span>
+            <span className="font-medium mt-1.5">{like}</span>
           </div>
-          <button className="btn btn-sm bg-amber-400 text-black text-white">
+          <button
+            onClick={() => {
+              navigate(`/artifact/${_id}`);
+            }}
+            className="btn btn-sm pt-1 bg-amber-400 text-black text"
+          >
             View Details
           </button>
         </div>

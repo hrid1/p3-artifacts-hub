@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const AddArtifact = () => {
+  const { user } = useContext(AuthContext);
+
   const [artifact, setArtifact] = useState({
     name: "",
     image: "",
@@ -10,23 +16,39 @@ const AddArtifact = () => {
     discoveredAt: "",
     discoveredBy: "",
     location: "",
+    like: 0,
+    addedBy: user.email,
   });
 
   // Mock authenticated user
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setArtifact({ ...artifact, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Artifact:", { ...artifact, addedBy: user });
-    // Add form submission logic here (e.g., send to API)
+    // console.log(artifact);
+
+    axios
+      .post("http://localhost:5000/artifact", artifact)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your Artifact has been Added!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((erro) => {
+        toast.error(erro.message);
+        // console.log(erro);
+      });
   };
 
   return (
@@ -165,22 +187,29 @@ const AddArtifact = () => {
           />
         </div>
 
-        <div className="mb-6">
-          <label className="label">
-            <span className="label-text">Artifact Adder</span>
-          </label>
-          <input
-            type="text"
-            value={user.name}
-            className="input input-bordered w-full bg-gray-100"
-            readOnly
-          />
-          <input
-            type="email"
-            value={user.email}
-            className="input input-bordered w-full bg-gray-100 mt-2"
-            readOnly
-          />
+        <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="label">
+              <span className="label-text">Adder Username</span>
+            </label>
+            <input
+              type="text"
+              value={user.displayName}
+              className="input input-bordered w-full bg-gray-100"
+              readOnly
+            />
+          </div>
+          <div>
+            <label className="label">
+              <span className="label-text">Adder Email</span>
+            </label>
+            <input
+              type="email"
+              value={user.email}
+              className="input input-bordered w-full bg-gray-100 "
+              readOnly
+            />
+          </div>
         </div>
 
         <button type="submit" className="btn bg-amber-400 mx-auto block w-4/5">
