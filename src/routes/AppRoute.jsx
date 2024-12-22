@@ -2,6 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../layout/RootLayout";
 import Home from "../pages/Home/Home";
 import AddArtifacts from "../pages/AddArtifacts/AddArtifacts";
+import Login from "../pages/Auth/Login";
+import Register from "../pages/Auth/Register";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +18,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "/add-artifacts",
-        element: <AddArtifacts />,
+        element: (
+          <PrivateRoute>
+            <AddArtifacts />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   },

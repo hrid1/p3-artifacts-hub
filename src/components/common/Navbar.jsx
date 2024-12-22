@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { AuthContext } from "../../provider/AuthProvider";
+import toast from "react-hot-toast";
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  console.log(user);
   const navLinks = (
     <>
       <NavLink
@@ -33,6 +38,16 @@ const Navbar = () => {
 
   // mouse hover or not
   const [isHover, setIsHover] = useState(false);
+  //handle logout
+  const handleLogout = () => {
+    logOut()
+      .then((res) => {
+        toast.success("Logout Successfull!");
+      })
+      .catch((err) => {
+        toast.error("Logout Failed!");
+      });
+  };
 
   return (
     <div className="navbar bg-base-200">
@@ -56,7 +71,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-32 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[5] mt-3 w-32 p-2 shadow"
           >
             {navLinks}
           </ul>
@@ -66,7 +81,9 @@ const Navbar = () => {
           className="font-bold text-xl text-ambe r-500 flex items-center justify-center gap-2"
         >
           <img className="w-10 h-10" src={logo} alt="site-logo" />
-          <p className="italic  p-1 rounded ">Artifact <span className="text-amber-600">Atlas</span></p>
+          <p className="italic  p-1 rounded ">
+            Artifact <span className="text-amber-600">Atlas</span>
+          </p>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
@@ -77,58 +94,77 @@ const Navbar = () => {
 
       {/* nav end */}
       <div className="navbar-end">
-        <div className="flex gap-2 md:gap-4">
-          <div className="dropdown dropdown-end flex items-center justify-center">
-            <div className="dropdown">
-              <div tabIndex={0} role="button" className="">
-                <button className="btn btn-sm bg-amber-300">My Profile</button>
-              </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-40 p-2 shadow font-medium"
-              >
-                <li>
-                  <Link to="my-artifacts">My Artifacts</Link>
-                </li>
-                <li>
-                  <Link to="liked-artifacts">Liked Artifacts</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* for profile */}
-          <div
-            className="relative rounded-full"
-            onMouseEnter={() => setIsHover(true)}
-            onMouseLeave={() => setIsHover(false)}
-          >
-            <div className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                />
+        {user ? (
+          <div className="flex gap-2 md:gap-4">
+            {/* for profile */}
+            <div className="dropdown dropdown-end flex items-center justify-center">
+              <div className="dropdown">
+                <div tabIndex={0} role="button" className="">
+                  <button className="btn btn-sm bg-amber-300">
+                    My Profile
+                  </button>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu bg-base-100 rounded-box z-[5] w-40 p-2 shadow font-medium"
+                >
+                  <li>
+                    <Link to="my-artifacts">My Artifacts</Link>
+                  </li>
+                  <li>
+                    <Link to="liked-artifacts">Liked Artifacts</Link>
+                  </li>
+                </ul>
               </div>
             </div>
-
-            {/* show username and logout button on hover */}
+            {/* user pic & Logout */}
             <div
-              className={` absolute top-11 -left-8 md:w-28   md:-left-16 rounded-md mr-10 bg-amber-50 p-2 z-10 ${
-                isHover ? "block" : "hidden"
-              }`}
+              className="relative rounded-full"
+              onMouseEnter={() => setIsHover(true)}
+              onMouseLeave={() => setIsHover(false)}
             >
-              <ul className="flex flex-col items-center gap-0.5">
-                <li>
-                  <a className="text-xs md:textlg">Hi, Hridoy</a>
-                </li>
-                <li>
-                  <button className="btn btn-xs md:btn-sm bg-amber-300">Logout</button>
-                </li>
-              </ul>
+              <div className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full">
+                  <img
+                    alt="Tailwind CSS Navbar component"
+                    src={user?.photoURL}
+                  />
+                </div>
+              </div>
+
+              {/* show username and logout button on hover */}
+              <div
+                className={` absolute top-11 -left-12 w-24 md:w-28   md:-left-16 rounded-md mr-10 bg-amber-50 p-2 z-10 ${
+                  isHover ? "block" : "hidden"
+                }`}
+              >
+                <ul className="flex flex-col items-center gap-0.5">
+                  <li>
+                    <a className="text-xs md:textlg">{user?.displayName}</a>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="btn btn-xs md:btn-sm bg-amber-300"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="space-x-2.5">
+            <Link to="/login">
+              <button className="btn  bg-amber-300">Login</button>
+            </Link>
+
+            <Link to="/register">
+              <button className="btn  bg-amber-50">Register</button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
