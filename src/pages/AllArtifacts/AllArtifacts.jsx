@@ -9,7 +9,7 @@ const AllArtifacts = () => {
       <h2 className="text-2xl font-bold text-center mb-6">All Artifacts</h2>
       <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-6">
         {artifacts.map((artifact) => (
-          <ArtifactCard key={artifact.id} artifact={artifact} />
+          <ArtifactCard key={artifact._id} artifact={artifact} />
         ))}
       </div>
     </div>

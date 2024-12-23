@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import axios from "axios";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const ArtifactDetails = () => {
-  const { id } = useParams(); // Get artifact ID from the route
+  const { id } = useParams();
   const navigate = useNavigate();
-
-  // Mock authenticated user check (replace with actual auth logic)
-  const isAuthenticated = true; // Replace with your authentication check
+  const { user } = useContext(AuthContext);
   const [artifact, setArtifact] = useState(null); // Artifact data
   const [likes, setLikes] = useState(0);
 
@@ -17,29 +16,30 @@ const ArtifactDetails = () => {
     // Mock API call to fetch artifact by ID
     const fetchArtifact = async () => {
       const { data } = await axios(`http://localhost:5000/artifact/${id}`);
-      //   const mockData = {
-      //     id,
-      //     name: "Rosetta Stone",
-      //     image: "https://via.placeholder.com/F300",
-      //     type: "Document",
-      //     context: "The key to decoding Egyptian hieroglyphs.",
-      //     createdAt: "196 BC",
-      //     discoveredAt: "1799",
-      //     discoveredBy: "Pierre-François Bouchard",
-      //     location: "The British Museum, London",
-      //     likes: 152,
-      //   };
 
       setArtifact(data);
-      setLikes(data.likes);
     };
 
     fetchArtifact();
-  }, [id, isAuthenticated, navigate]);
+  }, [id]);
 
-  const handleLike = () => {
-    setLikes((prev) => prev + 1); // Increment like count
-    // Add logic to update likes in the database
+  const handleLike = async () => {
+    // setLikes((prev) => prev + 1);
+    const { _id, ...rest } = artifact;
+    const userDetails = {
+      ...rest,
+      artifactId: _id,
+      likedBy: user?.email,
+    };
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/liked-artifact",
+        userDetails
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (!artifact) {
@@ -86,7 +86,7 @@ const ArtifactDetails = () => {
             <FaHeart className="text-red-500" />
             Like
           </button>
-          <span className="text-gray-700 font-semibold">{likes} Likes</span>
+          <span className="text-gray-700 font-semibold">{artifact.like} Likes</span>
         </div>
       </div>
     </div>
