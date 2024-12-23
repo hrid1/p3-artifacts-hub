@@ -1,27 +1,44 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import axios from "axios";
 import { AuthContext } from "../../provider/AuthProvider";
+import toast from "react-hot-toast";
+import LikeArtifacts from "../LikedArtifacts/LikeArtifacts";
 
 const ArtifactDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const [artifact, setArtifact] = useState(null); // Artifact data
-  const [likes, setLikes] = useState(0);
+  const [artifact, setArtifact] = useState([]); // Artifact data
+  const [likedArtifact, setLikedArtifact] = useState();
+  const [likes, setLikes] = useState(false);
+  // const [isLikes, setIsLikes] = useState(false);
 
   // Simulate fetching artifact data
   useEffect(() => {
-    // Mock API call to fetch artifact by ID
+    //  fetch artifact by ID
     const fetchArtifact = async () => {
-      const { data } = await axios(`http://localhost:5000/artifact/${id}`);
+      const { data } = await axios.get(`http://localhost:5000/artifact/${id}`);
 
       setArtifact(data);
     };
+    // fetch user liked artifact
+    const fetchlikedArtifact = async () => {
+      const { data } = await axios.get(
+        `http://localhost:5000/liked-artifacts/${user?.email}`
+      );
+      setLikedArtifact(data);
+    };
 
     fetchArtifact();
-  }, [id]);
+    fetchlikedArtifact();
+  }, [id, likes, user?.email]);
+
+  // const userLikedArtifact = likedArtifact.find()
+  // console.log(id, likedArtifact);
+  const result = likedArtifact?.find(({ artifactId }) => artifactId == id);
+  // console.log(result);
 
   const handleLike = async () => {
     // setLikes((prev) => prev + 1);
@@ -37,8 +54,9 @@ const ArtifactDetails = () => {
         userDetails
       );
       console.log(data);
+      setLikes(!likes);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data);
     }
   };
 
@@ -79,14 +97,27 @@ const ArtifactDetails = () => {
         </p>
 
         <div className="flex items-center justify-between">
-          <button
-            onClick={handleLike}
-            className="btn btn-outline bg-amber-300 flex items-center gap-2"
-          >
-            <FaHeart className="text-red-500" />
-            Like
-          </button>
-          <span className="text-gray-700 font-semibold">{artifact.like} Likes</span>
+          {result ? (
+            <button
+              onClick={handleLike}
+              className="btn btn-outline bg-amber-300/80 flex items-center gap-2"
+            >
+              <FaHeart className="text-red-500" />
+              Like
+            </button>
+          ) : (
+            <button
+              onClick={handleLike}
+              className="btn btn-outline bg-amber-100 flex items-center gap-2"
+            >
+              {/* <FaHeart className="text-black-200 " /> */}
+              <FaRegHeart />
+              Like
+            </button>
+          )}
+          <span className="text-gray-700 font-semibold">
+            {artifact.like} Likes
+          </span>
         </div>
       </div>
     </div>

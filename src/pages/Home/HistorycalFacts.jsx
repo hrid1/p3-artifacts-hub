@@ -29,7 +29,7 @@ const HistoricalFacts = () => {
         <FaQuoteRight className="text-gray-400 absolute bottom-4 right-4 text-2xl" />
         <button
           onClick={handleNextFact}
-          className="btn bg-amber-300 btn-sm mt-4 block mx-auto"
+          className="btn bg-amber-300 hover:bg-amber-400  mt-4 block mx-auto"
         >
           Next Fact
         </button>

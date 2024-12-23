@@ -50,7 +50,7 @@ const ContactSupport = () => {
               rows="4"
               required
             ></textarea>
-            <button type="submit" className="btn bg-amber-400 w-full">
+            <button type="submit" className="btn bg-amber-300 hover:bg-amber-400 w-full">
               Submit
             </button>
           </form>

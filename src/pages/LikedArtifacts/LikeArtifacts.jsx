@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import axios from "axios";
 import ArtifactCard from "../../components/others/ArtifactCard";
+import ArtifactLikeCard from "../../components/others/ArtifactLikeCard";
 
 const LikeArtifacts = () => {
   const { user } = useContext(AuthContext);
   const [artifacts, setArtifacts] = useState([]);
 
+  console.log(artifacts);
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -35,7 +37,10 @@ const LikeArtifacts = () => {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-8 md:my-12">
         {artifacts.map((artifact) => (
-          <ArtifactCard key={artifact._id} artifact={artifact}></ArtifactCard>
+          <ArtifactLikeCard
+            key={artifact._id}
+            artifact={artifact}
+          ></ArtifactLikeCard>
         ))}
       </div>
     </section>

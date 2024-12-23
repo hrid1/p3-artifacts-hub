@@ -22,7 +22,9 @@ const FeaturedArtifacts = () => {
 
   return (
     <section className="my-4 md:my-8">
-      <h2 className="text-3xl md:text-4xl text-center font-bold mb-4">Feature Actifacts</h2>
+      <h2 className="text-3xl md:text-4xl text-center font-bold mb-4">
+        Feature Actifacts
+      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
         {artifacts.map((artifact) => (
           <ArtifactCard key={artifact.id} artifact={artifact}></ArtifactCard>

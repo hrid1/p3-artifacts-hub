@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
 
-  console.log(user);
+  // console.log(user);
   const navLinks = (
     <>
       <NavLink
@@ -78,11 +78,11 @@ const Navbar = () => {
         </div>
         <Link
           to="/"
-          className="font-bold text-xl text-ambe r-500 flex items-center justify-center gap-2"
+          className=" text-ambe r-500 flex items-center justify-center gap-2"
         >
           <img className="w-10 h-10" src={logo} alt="site-logo" />
-          <p className="italic  p-1 rounded ">
-            Artifact <span className="text-amber-600">Atlas</span>
+          <p className="p-1 text-xl font-bold rounded  ">
+            Artifact <span className="text-amber-600 ">Atlas</span>
           </p>
         </Link>
       </div>
