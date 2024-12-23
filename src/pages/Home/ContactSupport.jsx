@@ -4,7 +4,13 @@ import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 const ContactSupport = () => {
   return (
     <div className="bg-base-100 py-12 px-6">
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">Contact & Support</h2>
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">
+        Contact & Support
+      </h2>
+      <p className="text-center w-full lg:w-4/5 mx-auto my-4">
+        Our Contact & Support team is here to help. Whether its inquiries,
+        feedback, or troubleshooting, were just a message away.
+      </p>
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Contact Info */}
         <div className="bg-white rounded-lg shadow-lg p-6">
@@ -31,6 +37,7 @@ const ContactSupport = () => {
         {/* Contact Form */}
         <div className="bg-white rounded-lg shadow-lg p-6">
           <h3 className="text-lg font-semibold mb-4">Send Us a Message</h3>
+
           <form className="space-y-4">
             <input
               type="text"
@@ -50,7 +57,10 @@ const ContactSupport = () => {
               rows="4"
               required
             ></textarea>
-            <button type="submit" className="btn bg-amber-300 hover:bg-amber-400 w-full">
+            <button
+              type="submit"
+              className="btn bg-amber-300 hover:bg-amber-400 w-full"
+            >
               Submit
             </button>
           </form>
