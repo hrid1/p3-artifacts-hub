@@ -2,15 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { AuthContext } from "../../provider/AuthProvider";
 import axios from "axios";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const MyArtifacts = () => {
-  // Mock authenticated user
-  //   const loggedInUser = {
-  //     id: "user123",
-  //     name: "John Doe",
-  //     email: "john.doe@example.com",
-  //   };
-
   const { user } = useContext(AuthContext);
   const [artifacts, setArtifacts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,48 +22,42 @@ const MyArtifacts = () => {
     fetchUserArtifacts();
   }, [user.email]);
 
-  // Simulate fetching user's artifacts
-  //   useEffect(() => {
-  //     const fetchMyArtifacts = async () => {
-  //       // Simulated API response
-  //       const mockData = [
-  //         {
-  //           id: 1,
-  //           name: "Rosetta Stone",
-  //           image: "https://via.placeholder.com/300",
-  //           type: "Document",
-  //           createdAt: "196 BC",
-  //           userId: "user123", // Owned by logged-in user
-  //         },
-  //         {
-  //           id: 2,
-  //           name: "Dead Sea Scrolls",
-  //           image: "https://via.placeholder.com/300",
-  //           type: "Writings",
-  //           createdAt: "300 BC",
-  //           userId: "user123", // Owned by logged-in user
-  //         },
-  //         // Add more artifacts as needed
-  //       ];
-
-  //       // Filter data to show only artifacts added by the logged-in user
-  //       const userArtifacts = mockData.filter(
-  //         (artifact) => artifact.userId === loggedInUser.id
-  //       );
-  //       setArtifacts(userArtifacts);
-  //       setLoading(false);
-  //     };
-
-  //     fetchMyArtifacts();
-  //   }, [loggedInUser.id]);
-
   // Handle artifact deletion
   const handleDelete = (id) => {
     // Confirmation dialog
-    if (window.confirm("Are you sure you want to delete this artifact?")) {
-      setArtifacts((prev) => prev.filter((artifact) => artifact.id !== id));
-      // Add logic to delete artifact from backend
-    }
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const { data } = await axios.delete(
+            `http://localhost:5000/artifact/${id}`
+          );
+          // console.log(data);
+          if (data.deletedCount) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+            // remove from ui
+            const filterArtifacts = artifacts.filter((artifact) => artifact._id !== id);
+            setArtifacts(filterArtifacts);
+            // setArtifacts((prev) => prev.filter((artifact) => artifact._id !== id))
+          }
+        } catch (error) {
+          toast.error("Error Occur!");
+          // console.log(error);
+        }
+      }
+    });
   };
 
   // Handle artifact update
@@ -98,7 +87,7 @@ const MyArtifacts = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {artifacts.map((artifact) => (
             <div
-              key={artifact.id}
+              key={artifact._id}
               className="card bg-white shadow-md rounded-lg"
             >
               <img
@@ -123,7 +112,7 @@ const MyArtifacts = () => {
                     Update
                   </button>
                   <button
-                    onClick={() => handleDelete(artifact.id)}
+                    onClick={() => handleDelete(artifact._id)}
                     className="btn btn-sm btn-outline btn-error flex items-center gap-2"
                   >
                     <FaTrashAlt />
