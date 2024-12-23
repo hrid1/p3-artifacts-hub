@@ -10,6 +10,7 @@ import AllArtifacts from "../pages/AllArtifacts/AllArtifacts";
 import ArtifactDetails from "../pages/ArtifactDetails/ArtifactDetails";
 import MyArtifacts from "../pages/MyArtifacts/MyArtifacts";
 import UpdateArtifact from "../pages/UpdateArtifact/UpdateArtifact";
+import LikeArtifacts from "../pages/LikedArtifacts/LikeArtifacts";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyArtifacts />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/liked-artifacts",
+        element: (
+          <PrivateRoute>
+            <LikeArtifacts />
           </PrivateRoute>
         ),
       },
