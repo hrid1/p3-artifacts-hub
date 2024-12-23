@@ -81,7 +81,7 @@ const Navbar = () => {
           className=" text-ambe r-500 flex items-center justify-center gap-2"
         >
           <img className="w-10 h-10" src={logo} alt="site-logo" />
-          <p className="p-1 text-xl font-bold rounded  ">
+          <p className="p-1 md:text-xl font-bold rounded  ">
             Artifact <span className="text-amber-600 ">Atlas</span>
           </p>
         </Link>

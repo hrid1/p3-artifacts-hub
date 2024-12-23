@@ -20,7 +20,7 @@ const ArtifactLikeCard = ({ artifact }) => {
         <img
           src={image}
           alt={name}
-          className="h-48 w-full object-cover rounded-t-lg"
+          className="h-48 md:h-56 w-full object-cover rounded-t-lg"
         />
       </figure>
       <div className="card-body space-y-2">

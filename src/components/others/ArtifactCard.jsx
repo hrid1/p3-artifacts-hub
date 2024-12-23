@@ -3,7 +3,7 @@ import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const ArtifactCard = ({ artifact }) => {
-  const { _id, name, image, description, like } = artifact || {};
+  const { _id, name, image, context, like } = artifact || {};
   const navigate = useNavigate();
   return (
     <div className="card  bg-base-100 shadow-xl">
@@ -11,12 +11,12 @@ const ArtifactCard = ({ artifact }) => {
         <img
           src={image}
           alt={name}
-          className="h-48 w-full object-cover rounded-t-lg"
+          className="h-48 md:h-56 w-full object-cover rounded-t-lg"
         />
       </figure>
       <div className="card-body">
         <h2 className="card-title text-lg font-bold">{name}</h2>
-        <p className="text-sm text-gray-600">{description}</p>
+        <p className="text-sm text-gray-600">{context.slice(0, 85)}</p>
         <div className="flex items-center justify-between mt-4">
           <div className="flex items-center gap-2 text-red-500">
             <FaHeart />
