@@ -17,7 +17,10 @@ const MyArtifacts = () => {
     const fetchUserArtifacts = async () => {
       try {
         const { data } = await axios(
-          `http://localhost:5000/artifacts/${user?.email}`
+          `http://localhost:5000/artifacts/${user?.email}`,
+          {
+            withCredentials: true,
+          }
         );
         setArtifacts(data);
         setLoading(false);
