@@ -182,7 +182,7 @@ const Register = () => {
             Sign In
           </Link>
         </div>
-        <div className="mt-6 text-center">
+        {/* <div className="mt-6 text-center">
           <button
             onClick={handleGoogleLogin}
             className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border rounded-lg shadow-md hover:bg-gray-100"
@@ -190,7 +190,7 @@ const Register = () => {
             <FcGoogle className="mr-2 text-lg" />
             Continue with Google
           </button>
-        </div>
+        </div> */}
         <p className="mt-4 text-sm text-center text-gray-600">
           By signing in, you agree to our{" "}
           <Link to="/" className="text-amber-600 hover:underline">

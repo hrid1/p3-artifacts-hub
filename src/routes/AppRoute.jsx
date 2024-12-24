@@ -11,12 +11,13 @@ import ArtifactDetails from "../pages/ArtifactDetails/ArtifactDetails";
 import MyArtifacts from "../pages/MyArtifacts/MyArtifacts";
 import UpdateArtifact from "../pages/UpdateArtifact/UpdateArtifact";
 import LikeArtifacts from "../pages/LikedArtifacts/LikeArtifacts";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    errorElement: <h4>NOt Found</h4>,
+    errorElement: <ErrorPage/>,
     children: [
       {
         path: "/",
@@ -77,8 +78,5 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/about",
-    element: <h1>About</h1>,
-  },
+ 
 ]);
