@@ -1,6 +1,6 @@
 import React from "react";
 import { FaHeart } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ArtifactCard = ({ artifact }) => {
   const { _id, name, image, context, like } = artifact || {};
@@ -30,6 +30,7 @@ const ArtifactCard = ({ artifact }) => {
           >
             View Details
           </button>
+          
         </div>
       </div>
     </div>

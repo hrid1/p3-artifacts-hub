@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -65,7 +66,7 @@ const UpdateArtifact = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate('/my-artifacts')
+        navigate("/my-artifacts");
       }
     } catch (error) {
       //   console.log(error);
@@ -76,6 +77,10 @@ const UpdateArtifact = () => {
 
   return (
     <div className="py-12 px-6 bg-base-100">
+      <Helmet>
+        <title>Update Artifacts | Artifact Atlas</title>
+      </Helmet>
+
       <h2 className="text-2xl font-bold text-center mb-6">Add an Artifact</h2>
       <form
         onSubmit={handleUpdate}

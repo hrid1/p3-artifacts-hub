@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const AddArtifact = () => {
   const { user } = useContext(AuthContext);
@@ -53,6 +54,10 @@ const AddArtifact = () => {
 
   return (
     <div className="py-12 px-6 bg-base-100">
+      <Helmet>
+        <title>Add Artifacts | Artifact Atlas</title>
+      </Helmet>
+
       <h2 className="text-2xl font-bold text-center mb-6">Add an Artifact</h2>
       <form
         onSubmit={handleSubmit}

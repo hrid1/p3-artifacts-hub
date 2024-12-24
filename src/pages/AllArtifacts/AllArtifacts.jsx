@@ -2,6 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import ArtifactCard from "../../components/others/ArtifactCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const AllArtifacts = () => {
   // const artifacts = useLoaderData();
@@ -18,6 +19,9 @@ const AllArtifacts = () => {
 
   return (
     <div className="py-12 px-6 bg-amber-50">
+      <Helmet>
+        <title>All Aritacts | Artifact Atlas</title>
+      </Helmet>
       <h2 className="text-2xl font-bold text-center mb-6">All Artifacts</h2>
       <div className="flex items-center justify-center my-4">
         <input

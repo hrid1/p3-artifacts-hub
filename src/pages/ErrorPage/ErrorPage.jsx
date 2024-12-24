@@ -1,7 +1,11 @@
+import { Helmet } from "react-helmet-async";
 
 const ErrorPage = () => {
   return (
     <div>
+      <Helmet>
+        <title>Error | Artifact Atlas</title>
+      </Helmet>
       <div className="bg-gradient-to-r from-slate-200 to-gray-200 ">
         <div className="flex items-center justify-center min-h-screen px-2">
           <div className="text-center">

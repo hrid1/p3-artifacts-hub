@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const MyArtifacts = () => {
   const { user } = useContext(AuthContext);
@@ -84,6 +85,10 @@ const MyArtifacts = () => {
 
   return (
     <div className="py-12 px-6 bg-base-200">
+      <Helmet>
+        <title>My Artifacts | Artifact Atlas</title>
+      </Helmet>
+
       <h2 className="text-2xl font-bold text-center mb-6">My Artifacts</h2>
 
       {artifacts.length === 0 ? (

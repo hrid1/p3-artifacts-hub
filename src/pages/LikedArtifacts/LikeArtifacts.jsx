@@ -3,6 +3,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 import axios from "axios";
 import ArtifactCard from "../../components/others/ArtifactCard";
 import ArtifactLikeCard from "../../components/others/ArtifactLikeCard";
+import { Helmet } from "react-helmet-async";
 
 const LikeArtifacts = () => {
   const { user } = useContext(AuthContext);
@@ -32,6 +33,10 @@ const LikeArtifacts = () => {
     );
   return (
     <section className="bg-amber-50 p-4">
+      <Helmet>
+        <title>Like Artifacts | Artifact Atlas</title>
+      </Helmet>
+
       <h2 className="text-center text-4xl my-14 font-bold">
         My Liked Artifacts :)
       </h2>

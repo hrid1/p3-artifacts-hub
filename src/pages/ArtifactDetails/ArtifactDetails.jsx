@@ -5,6 +5,8 @@ import axios from "axios";
 import { AuthContext } from "../../provider/AuthProvider";
 import toast from "react-hot-toast";
 import LikeArtifacts from "../LikedArtifacts/LikeArtifacts";
+import { Helmet } from "react-helmet-async";
+import { AiTwotoneLike } from "react-icons/ai";
 
 const ArtifactDetails = () => {
   const { id } = useParams();
@@ -70,37 +72,45 @@ const ArtifactDetails = () => {
 
   return (
     <div className="py-12 px-6 bg-amber-50">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
+      <Helmet>
+        <title>Artifact Details | Artifact-Atlas</title>
+      </Helmet>
+
+      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
         <img
           src={artifact.image}
           alt={artifact.name}
-          className="w-full h-72 object-cover rounded-lg mb-6"
+          className="w-full h-72 lg:h-[400px] object-cover rounded-lg mb-6"
         />
-        <h1 className="text-2xl font-bold mb-4">{artifact.name}</h1>
-        <p className="text-gray-600 mb-4">
-          <strong>Type:</strong> {artifact.type}
-        </p>
-        <p className="text-gray-600 mb-4">
-          <strong>Historical Context:</strong> {artifact.context}
-        </p>
-        <p className="text-gray-600 mb-4">
-          <strong>Created At:</strong> {artifact.createdAt}
-        </p>
-        <p className="text-gray-600 mb-4">
-          <strong>Discovered At:</strong> {artifact.discoveredAt}
-        </p>
-        <p className="text-gray-600 mb-4">
-          <strong>Discovered By:</strong> {artifact.discoveredBy}
-        </p>
-        <p className="text-gray-600 mb-6">
-          <strong>Present Location:</strong> {artifact.location}
-        </p>
+        <h1 className="text-3xl font-extrabold text-amber-500 mb-4">
+          {artifact.name}
+        </h1>
+        <div className="space-y-4 text-gray-700">
+          <p className="text-lg">
+            <strong>Type:</strong> {artifact.type}
+          </p>
+          <p className="text-lg">
+            <strong>Historical Context:</strong> {artifact.context}
+          </p>
+          <p className="text-lg">
+            <strong>Created At:</strong> {artifact.createdAt}
+          </p>
+          <p className="text-lg">
+            <strong>Discovered At:</strong> {artifact.discoveredAt}
+          </p>
+          <p className="text-lg">
+            <strong>Discovered By:</strong> {artifact.discoveredBy}
+          </p>
+          <p className="text-lg mb-6">
+            <strong>Present Location:</strong> {artifact.location}
+          </p>
+        </div>
 
         <div className="flex items-center justify-between">
           {result ? (
             <button
               onClick={handleLike}
-              className="btn btn-outline bg-amber-300/80 flex items-center gap-2"
+              className="btn btn-outline bg-amber-300/80 hover:bg-amber-300 text-teal-800 flex items-center gap-2"
             >
               <FaHeart className="text-red-500" />
               Like
@@ -108,14 +118,15 @@ const ArtifactDetails = () => {
           ) : (
             <button
               onClick={handleLike}
-              className="btn btn-outline bg-amber-100 flex items-center gap-2"
+              className="btn btn-outline bg-amber-100 hover:bg-amber-300 text-gray-600 flex items-center gap-2"
             >
-              {/* <FaHeart className="text-black-200 " /> */}
-              <FaRegHeart />
+              <FaRegHeart className="text-gray-500" />
               Like
             </button>
           )}
-          <span className="text-gray-700 font-semibold">
+          <span className="text-gray-700 font-semibold flex  gap-2">
+          <AiTwotoneLike className="text-xl -amber-300" />
+
             {artifact.like} Likes
           </span>
         </div>
