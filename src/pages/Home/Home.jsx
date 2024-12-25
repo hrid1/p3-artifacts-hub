@@ -3,6 +3,7 @@ import Banner from "../../components/others/Banner";
 import ContactSupport from "./ContactSupport";
 import FeaturedArtifacts from "./FeaturedActifacts";
 import HistoricalFacts from "./HistorycalFacts";
+import AboutUs from "./AboutUs";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <Banner />
       <FeaturedArtifacts />
       <HistoricalFacts />
+      <AboutUs/>
       <ContactSupport />
     </div>
   );
