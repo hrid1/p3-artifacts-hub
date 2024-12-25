@@ -23,7 +23,7 @@ const Register = () => {
     const email = form.get("email");
     const password = form.get("password");
 
-    console.log(username, photourl, email, password);
+    // console.log(username, photourl, email, password);
 
     // set error default
     setError({});
@@ -58,7 +58,7 @@ const Register = () => {
   const handleGoogleLogin = () => {
     loginWithGoogle()
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         navigate("/");
         toast.success("Account created successfully!");
       })

@@ -3,6 +3,7 @@ import ArtifactCard from "../../components/others/ArtifactCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
+import Spiner from "../../components/common/Spiner";
 
 const AllArtifacts = () => {
   // const artifacts = useLoaderData();
@@ -10,12 +11,18 @@ const AllArtifacts = () => {
 
   const [search, setSearch] = useState("");
   const [artifacts, setArtifacts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/artifacts?search=${search}`)
-      .then((res) => setArtifacts(res.data));
+      .get(`https://artifact-server.vercel.app/artifacts?search=${search}`)
+      .then((res) => {
+        setArtifacts(res.data);
+        setLoading(false);
+      });
   }, [search]);
+
+  if (loading) return <Spiner />;
 
   return (
     <div className="py-12 px-6 bg-amber-50">

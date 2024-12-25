@@ -9,7 +9,7 @@ const Login = () => {
   const { loginUser, loginWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state);
+  // console.log(location.state);
   //   console.log(loginUser);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +17,7 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    console.log(email, password);
+    // console.log(email, password);
     loginUser(email, password)
       .then((res) => {
         toast.success("Welcome Back!");
@@ -25,7 +25,7 @@ const Login = () => {
       })
       .catch((err) => {
         toast.error("Something Wrong!!!");
-        console.log(err);
+        // console.log(err);
       });
   };
   //   handle login with google

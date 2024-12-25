@@ -15,11 +15,11 @@ const UpdateArtifact = () => {
   useEffect(() => {
     const fetchArtifact = async () => {
       try {
-        const { data } = await axios(`http://localhost:5000/artifact/${id}`);
-        console.log(data);
+        const { data } = await axios(`https://artifact-server.vercel.app/artifact/${id}`);
+        // console.log(data);
         setArtifact(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     fetchArtifact();
@@ -53,10 +53,10 @@ const UpdateArtifact = () => {
     // send to the server
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/artifact/${artifact._id}`,
+        `https://artifact-server.vercel.app/artifact/${artifact._id}`,
         updateData
       );
-      console.log(data);
+      // console.log(data);
       if (data.modifiedCount) {
         // form.reset();
         Swal.fire({

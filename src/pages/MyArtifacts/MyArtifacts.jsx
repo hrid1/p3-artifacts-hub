@@ -6,31 +6,35 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Spiner from "../../components/common/Spiner";
 
 const MyArtifacts = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [artifacts, setArtifacts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     const fetchUserArtifacts = async () => {
       try {
-        const { data } = await axios(
-          `http://localhost:5000/artifacts/${user?.email}`,
-          {
-            withCredentials: true,
-          }
-        );
+        // const { data } = await axios(
+        //   `https://artifact-server.vercel.app/artifacts/${user?.email}`,
+        //   {
+        //     withCredentials: true,
+        //   }
+        // );
+        const { data } = await axiosSecure.get(`/artifacts/${user?.email}`);
         setArtifacts(data);
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
 
     fetchUserArtifacts();
-  }, [user.email]);
+  }, [axiosSecure, user?.email]);
 
   // Handle artifact deletion
   const handleDelete = (id) => {
@@ -48,7 +52,7 @@ const MyArtifacts = () => {
       if (result.isConfirmed) {
         try {
           const { data } = await axios.delete(
-            `http://localhost:5000/artifact/${id}`
+            `https://artifact-server.vercel.app/artifact/${id}`
           );
           // console.log(data);
           if (data.deletedCount) {
@@ -79,11 +83,7 @@ const MyArtifacts = () => {
   // };
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <span className="loading loading-spinner text-primary"></span>
-      </div>
-    );
+    return <Spiner />;
   }
 
   return (

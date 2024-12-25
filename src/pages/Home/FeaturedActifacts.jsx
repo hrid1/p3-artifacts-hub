@@ -8,7 +8,7 @@ const FeaturedArtifacts = () => {
   const [artifacts, setArtifacts] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/artifacts?sort=true")
+      .get("https://artifact-server.vercel.app/artifacts?sort=true")
       .then((res) => setArtifacts(res.data));
   }, []);
 

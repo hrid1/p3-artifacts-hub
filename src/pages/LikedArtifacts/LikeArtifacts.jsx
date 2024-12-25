@@ -4,26 +4,32 @@ import axios from "axios";
 import ArtifactCard from "../../components/others/ArtifactCard";
 import ArtifactLikeCard from "../../components/others/ArtifactLikeCard";
 import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Spiner from "../../components/common/Spiner";
 
 const LikeArtifacts = () => {
-  const { user } = useContext(AuthContext);
+  const { user} = useContext(AuthContext);
   const [artifacts, setArtifacts] = useState([]);
-
-  console.log(artifacts);
+  const [loading, setLoading] = useState(true);
+  const axiosSecure = useAxiosSecure();
+  
   useEffect(() => {
     const loadData = async () => {
       try {
-        const { data } = await axios.get(
-          `http://localhost:5000/liked-artifacts/${user?.email}`
+        const { data } = await axiosSecure.get(
+          `/liked-artifacts/${user?.email}`
         );
         setArtifacts(data);
+        setLoading(false);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     loadData();
   }, [user]);
-  console.log(artifacts);
+  // console.log(artifacts);
+
+  if(loading) return <Spiner/>
 
   if (artifacts.length === 0)
     return (
@@ -40,7 +46,7 @@ const LikeArtifacts = () => {
       <h2 className="text-center text-4xl my-14 font-bold">
         My Liked Artifacts :)
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-8 md:my-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 my-8 md:my-12">
         {artifacts.map((artifact) => (
           <ArtifactLikeCard
             key={artifact._id}

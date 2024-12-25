@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import LikeArtifacts from "../LikedArtifacts/LikeArtifacts";
 import { Helmet } from "react-helmet-async";
 import { AiTwotoneLike } from "react-icons/ai";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const ArtifactDetails = () => {
   const { id } = useParams();
@@ -15,27 +16,32 @@ const ArtifactDetails = () => {
   const [artifact, setArtifact] = useState([]); // Artifact data
   const [likedArtifact, setLikedArtifact] = useState();
   const [likes, setLikes] = useState(false);
-  // const [isLikes, setIsLikes] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
   // Simulate fetching artifact data
   useEffect(() => {
     //  fetch artifact by ID
     const fetchArtifact = async () => {
-      const { data } = await axios.get(`http://localhost:5000/artifact/${id}`);
+      const { data } = await axios.get(`https://artifact-server.vercel.app/artifact/${id}`);
 
       setArtifact(data);
     };
     // fetch user liked artifact
     const fetchlikedArtifact = async () => {
-      const { data } = await axios.get(
-        `http://localhost:5000/liked-artifacts/${user?.email}`
-      );
+
+      // const { data } = await axios.get(
+      //   `https://artifact-server.vercel.app/liked-artifacts/${user?.email}`
+      // );
+
+      const { data } = await axiosSecure.get(`/liked-artifacts/${user?.email}`);
+
       setLikedArtifact(data);
+
     };
 
     fetchArtifact();
     fetchlikedArtifact();
-  }, [id, likes, user?.email]);
+  }, [axiosSecure, id, likes, user?.email]);
 
   // const userLikedArtifact = likedArtifact.find()
   // console.log(id, likedArtifact);
@@ -52,10 +58,10 @@ const ArtifactDetails = () => {
     };
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/liked-artifact",
+        "https://artifact-server.vercel.app/liked-artifact",
         userDetails
       );
-      console.log(data);
+      // console.log(data);
       setLikes(!likes);
     } catch (error) {
       toast.error(error.response.data);
@@ -110,7 +116,7 @@ const ArtifactDetails = () => {
           {result ? (
             <button
               onClick={handleLike}
-              className="btn btn-outline bg-amber-300/80 hover:bg-amber-300 text-teal-800 flex items-center gap-2"
+              className="btn btn-outline bg-amber-300/80 hover:bg-amber-300 text-teal-800 flex items-center gap-2 hover:text-black"
             >
               <FaHeart className="text-red-500" />
               Like
@@ -118,14 +124,14 @@ const ArtifactDetails = () => {
           ) : (
             <button
               onClick={handleLike}
-              className="btn btn-outline bg-amber-100 hover:bg-amber-300 text-gray-600 flex items-center gap-2"
+              className="btn btn-outline bg-amber-300/60 hover:bg-amber-300 hover:text-black text-gray-600 flex items-center gap-2 font-bold"
             >
               <FaRegHeart className="text-gray-500" />
               Like
             </button>
           )}
           <span className="text-gray-700 font-semibold flex  gap-2">
-          <AiTwotoneLike className="text-xl -amber-300" />
+          <AiTwotoneLike className="text-xl " />
 
             {artifact.like} Likes
           </span>

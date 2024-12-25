@@ -33,7 +33,7 @@ const AddArtifact = () => {
     // console.log(artifact);
 
     axios
-      .post("http://localhost:5000/artifact", artifact)
+      .post("https://artifact-server.vercel.app/artifact", artifact)
       .then((res) => {
         console.log(res.data);
         if (res.data.insertedId) {

@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
 
       if (currentUser?.email) {
         const { data } = await axios.post(
-          "http://localhost:5000/jwt",
+          "https://artifact-server.vercel.app/jwt",
           {
             email: currentUser.email,
           },
@@ -44,16 +44,16 @@ const AuthProvider = ({ children }) => {
             withCredentials: true,
           }
         );
-        console.log(data);
+        // console.log(data);
       } else {
         const { data } = await axios.post(
-          "http://localhost:5000/logout",
+          "https://artifact-server.vercel.app/logout",
           {},
           {
             withCredentials: true,
           }
         );
-        console.log(data);
+        // console.log(data);
       }
     });
     return () => unSubscribe();
